@@ -1,0 +1,5 @@
+lexer.mll -> Lexically analyzes an input file compiled by the command
+	ocamllex lexer.mll 
+parser.mly -> Parsers through the Lexical analysis of a file this is how you compile it
+	ocamlyacc parser.mly 
+calc.ml -> An interpreter environment, you can test your grammar (lexer.mll) this way and see how it is parsed by parser.mly 
