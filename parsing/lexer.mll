@@ -26,7 +26,6 @@ let endfeed = "}"
 let feeds = "["
 let endfeeds = "]"
 
-
 let value = ['A'-'Z' 'a'-'z' '0'-'9' ' ' ]+ 
 let integer = ('-'|'+')*  ['0' - '9']+ 
 let float_point = integer "." integer
@@ -35,13 +34,14 @@ let billion = float_point ['B']
 let percent = integer ['%']
  
 let time = integer ':' integer ("AM"|"PM") ' ' ['A'-'Z']+
-let date = ("Jan"|"Feb"|"Mar"|"Apr"|"May"|"June"|"July"|"Aug"|"Sep"|"Oct"|"Nov"|"Dec") " "  integer comma " " time 
+let date = ("Jan"|"Feb"|"Mar"|"Apr"|"May"|"Jun"|"Jul"|"Aug"|"Sep"|"Oct"|"Nov"|"Dec") " "  integer comma " " time 
 
 (*Entry Points *) 
 rule token  =  parse
-  [' ' '\t'] 
+  [' ' '\t'  ] 
 		{ token lexbuf }     (* skip blanks *)
-  | ['\n' ]  
+	| "//" {token lexbuf} 	
+	| ['\n' ]  
 		{ EOL }			
 	| comma 	 
 		{ Comma } 	
