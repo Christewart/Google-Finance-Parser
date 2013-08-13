@@ -1,30 +1,41 @@
 
-let create_table dbh =
-	PGSQL(dbh) "database=test" "execute" "create temporary table users
-	(
+let create_table dbh  = 
+	PGSQL(dbh) "database=stocks" "execute" 
+		"create temporary table temp  
+		(
 		id serial not null primary key,
-		name text not null,
-		age
-		int not null
-	)"
-
-let insert_user dbh name age =
-	PGSQL(dbh) "database=test" "INSERT INTO users (name, age)
-	VALUES ($name, $age)"
-
-let get_users dbh =
-	PGSQL(dbh) "database=test" "SELECT id, name, age FROM users"
-
-let print_user (id, name, age) =
-	Printf.printf "Id: %ld Name: %s
-	Age: %ld \n" id name age
-
+		google_id int not null, 
+		ticker text not null,	
+		exchange text not null,
+		l decimal, 	
+		l_cur decimal, 
+		s int,
+		ltt time not null, 
+		lt timestamp not null, 
+		c decimal, 
+		cp decimal, 
+		ccol text,
+		eo text,
+		delay text,
+		op decimal not null,
+		hi decimal not null,
+		lo decimal not null,
+		vo decimal not null, 
+		hi52 decimal not null,
+		lo52 decimal not null,
+		mc decimal not null,
+		pe text,
+		fwpe text,
+		beta decimal,
+		eps decimal, 
+		shares decimal not null,
+		inst_own text not null,
+		name text not null,	
+		type text not null ); "  
+let drop_table dbh table_name = 
+	PGSQL(dbh) "database=stocks" "execute" "drop table $table_name" 
+ 
 let _ =
-	let dbh = PGOCaml.connect () ~database:"test" in
-	let () = create_table dbh in
-	let () =
-		insert_user dbh "John" 30l;
-		insert_user dbh "Mary" 40l;
-		insert_user dbh "Mark" 42l in
-		List.iter print_user (get_users dbh)
-
+	let dbh = PGOCaml.connect () ~database:"stocks" in
+	let () = create_table dbh in () 
+	

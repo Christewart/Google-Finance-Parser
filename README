@@ -1,4 +1,4 @@
-Pull.txt is the financial data pulled from Google Finance (JSON format)
-Pull.native is the script that actually pulls the data down
-Pull.ml is the Ocaml code that executes this
-The parsing folder contains all of the information with regards to parsing through JSON in Ocaml
+parsing/ -> Handles all of the parsing and saving of the financial data pulled down from Google.
+pull/ -> Pulls the financial data down from Google Finance.
+
+What this application is meant to do is simply pull down Google Finance information and store it inside of a postgres database. The implementation is written in Ocaml.  
