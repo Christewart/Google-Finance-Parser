@@ -36,18 +36,18 @@ expr:
 		{} 		
 feeds: 
 	| feed Comma feeds 
-		{print_string "Feeds is composed of Feed \n"}	
+		{(*print_string "Feeds is composed of Feed \n"*)}	
 	| Feeds feed EndFeeds 
-		{print_string "found a single feed \n"}  
+		{ (*print_string "found a single feed \n"*)}  
 	| Feeds 
 		{print_string "["}
 	| EndFeeds 
 		{print_string "]"}	
 feed:
 	| Feed 	maps EndFeed 
-		{print_string "Found map inside of feed! \n"} 
+		{ (* print_string "Found map inside of feed! \n" *) } 
 	| Feed  maps EndFeed Comma feed 
-		{print_string "A Feed is composed of Maps. \n"} 
+		{ (* print_string "A Feed is composed of Maps. \n" *) } 
 	| Feed  
 		{print_string "{"}
 	| EndFeed 
@@ -59,13 +59,13 @@ map:
 	| value Map value { print_string  (String.concat "" [$1;":"; $3]) }
 value: 
 	| Int 
-		{ print_string "printing Int\n"; string_of_int $1 }
+		{ (*print_string "printing Int\n";*) string_of_int $1 }
 	| Float  
-			{print_string "printing Float\n"; string_of_float $1} 
+			{(*print_string "printing Float\n";*) string_of_float $1} 
 	| Key  
-		{ print_string "printing Key\n"; $1 } 
+		{ (*print_string "printing Key\n";*) $1 } 
 	| Value
-		{print_string "printing Value\n"; $1 } 
+		{(*print_string "printing Value\n";*) $1 } 
 	| Time 
 		{ $1 }	
 	| Datetime 

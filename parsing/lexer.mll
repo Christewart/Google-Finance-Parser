@@ -11,7 +11,8 @@ open Lexing
 let strip_last_char s = 
 	let len = String.length s in 	
 	Str.string_before s (len-1) 
-
+let strip_comma_from_number number_string = 
+	
 }
 (*Identifiers*)
 
@@ -26,8 +27,8 @@ let endfeed = "}"
 let feeds = "["
 let endfeeds = "]"
 
-let value = ['A'-'Z' 'a'-'z' '0'-'9' ' ' ]+ 
-let integer = ('-'|'+')*  ['0' - '9']+ 
+let value = ['A'-'Z' 'a'-'z' '0'-'9' ' ']+ 
+let integer = ('-'|'+')*  ['0' - '9']* [',']* ['0' - '9']+  
 let float_point = integer "." integer
 let million = float_point ['M'] 
 let billion = float_point ['B'] 
@@ -40,7 +41,7 @@ let date = ("Jan"|"Feb"|"Mar"|"Apr"|"May"|"Jun"|"Jul"|"Aug"|"Sep"|"Oct"|"Nov"|"D
 rule token  =  parse
   [' ' '\t'  ] 
 		{ token lexbuf }     (* skip blanks *)
-	| "//" {token lexbuf} 	
+	| "//" {token lexbuf} 	(* skip '//' *)	
 	| ['\n' ]  
 		{ EOL }			
 	| comma 	 
@@ -76,7 +77,7 @@ rule token  =  parse
 		{Feeds} 
 	| endfeeds 
 		{EndFeeds}  			
-	| quote 	
+	| quote			(* skip quotes *) 	
 		{token lexbuf } 	
 	| emptystring 	
 		{Emptystring} 	

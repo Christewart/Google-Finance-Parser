@@ -31,12 +31,12 @@ List.map os v
 );;
 
 if Array.length(Sys.argv) > 1 then (  
-pull ( Array.to_list(Sys.argv) );
-print_string "Results are in pull.txt!\n" 
+	pull ( Array.to_list(Sys.argv) );
+	print_string "Results are in pull.txt!\n" 
 ) 
 else ( 
-print_string "You did not provide any tickers!\n";
-print_string "Here is a correct example: \n"; 
-print_string "./pull.native tsla goog \n";
+	print_string "You did not provide any tickers!\n";
+	print_string "Here is a correct example: \n"; 
+	print_string "./pull.native tsla goog \n";
 )  
 ;; 
