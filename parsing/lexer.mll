@@ -11,8 +11,16 @@ open Lexing
 let strip_last_char s = 
 	let len = String.length s in 	
 	Str.string_before s (len-1) 
-let strip_comma_from_number number_string = 
-	
+(* string_map_partial : (char -> char option) -> string -> string *)
+let string_map_partial f s =
+  let buf = String.create (String.length s) in
+  let j = ref 0 in
+  for i = 0 to String.length s - 1 do
+    match f s.[i] with
+    | None -> ()
+    | Some c -> buf.[!j] <- c; incr j
+  done;
+  String.sub buf 0 !j	
 }
 (*Identifiers*)
 
@@ -51,9 +59,10 @@ rule token  =  parse
 	| time as t 
 		{Time(t)} 	
 	| float_point as expr 
-		{Float(float_of_string expr) } 
+		{Float(float_of_string ( string_map_partial ( fun c -> if c = ',' then None else Some c) expr)		)} 
 	| integer as expr 
-		{Int(int_of_string expr) }
+		{
+			Int( int_of_string ( string_map_partial (fun c -> if c = ',' then None else Some c) expr)) }
 	| million as mil 
 		{ 	let number = strip_last_char mil in 	
 				Float((float_of_string number) *. 1000000.0) 
